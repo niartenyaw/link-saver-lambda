@@ -1,3 +1,6 @@
+require 'git'
+require 'date'
+
 class GitHandler
 
   GITHUB_URI = 'https://github.com/niartenyaw/appacademy-slack-saved-links'.freeze
@@ -14,7 +17,10 @@ class GitHandler
   end
 
   def save
-    puts git.diff
+    return unless git.diff.size > 0
+    git.add
+    git.commit("Update from #{Time.now}")
+    git.push("https://link-saver-bot:#{ENV["GITHUB_PASSWORD"]}@github.com/niartenyaw/appacademy-slack-saved-links.git")
   end
 
   private

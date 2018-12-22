@@ -1,6 +1,3 @@
-require 'git'
-require 'date'
-
 require_relative 'lib/file_updater'
 require_relative 'lib/git_handler'
 require_relative 'lib/slack_channel_history'
@@ -17,7 +14,6 @@ def lambda_handler(event:, context:)
   git_handler.clone
 
   histories = SlackChannelHistory.new(channels: CHANNELS).call
-  p histories
 
   FileUpdater.new(
     channels: CHANNELS,
