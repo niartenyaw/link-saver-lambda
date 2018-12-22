@@ -1,32 +1,31 @@
 require 'git'
 require 'date'
 
-NAME = 'saved-links'
-GITHUB_URI = 'https://github.com/niartenyaw/appacademy-slack-saved-links'
-SLACK_CHANNEL_HISTORY_URL = 'https://slack.com/api/channels.history'
+require_relative 'lib/file_updater'
+require_relative 'lib/git_handler'
+require_relative 'lib/slack_channel_history'
 
-CHANNELS_ID_MAP = {
-  'ethics' => 'CBJE3MNGK'
-}
-
-CHANNELS_TO_SAVE = [
+CHANNELS = [
   'ethics'
-]
+].freeze
+
+REPO_NAME = 'saved-links'.freeze
 
 def lambda_handler(event:, context:)
-  `rm -rf #{NAME}`
+  git_handler = GitHandler.new(repo_location: REPO_NAME)
 
-  g = Git.clone(GITHUB_URI, NAME)
-  CHANNELS_TO_SAVE.each do |channel|
-    filename = File.join(NAME, channel)
-    File.open(filename) do |f|
-      lines = f.readlines
-      link_hash = Hash.new
-      lines.each { |line| link_hash[line] = true }
+  git_handler.clone
 
+  histories = SlackChannelHistory.new(channels: CHANNELS).call
+  p histories
 
-    end
-  end
+  FileUpdater.new(
+    channels: CHANNELS,
+    histories: histories,
+    repo_location: REPO_NAME
+  ).call
+
+  git_handler.save
 
   { statusCode: 200 }
 end
