@@ -5,7 +5,7 @@ end
 
 task :up do
   puts "Updating lambda on AWS..."
-  `aws lambda update-function-code --function-name support-algolia --zip-file fileb://$PWD/lambda.zip`
+  `aws lambda update-function-code --function-name link-saver --zip-file fileb://$PWD/lambda.zip`
 end
 
 task :bundle_deployment do
