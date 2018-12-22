@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative 'lib/file_updater'
 require_relative 'lib/git_handler'
 require_relative 'lib/slack_channel_history'

@@ -21,6 +21,7 @@ class GitHandler
     git.add
     git.commit("Update from #{Time.now}")
     git.push("https://link-saver-bot:#{ENV["GITHUB_PASSWORD"]}@github.com/niartenyaw/appacademy-slack-saved-links.git")
+    `rm -rf #{repo_location}`
   end
 
   private
