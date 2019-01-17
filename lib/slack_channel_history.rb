@@ -12,7 +12,8 @@ class SlackChannelHistory
   #rubocop:enable Metrics/LineLength
 
   CHANNEL_ID_MAP = {
-    'ethics' => 'CBJE3MNGK'
+    'ethics' => 'CBJE3MNGK',
+    'effective-altruism' => 'CELS5419U'
   }.freeze
 
   def initialize(channels:)

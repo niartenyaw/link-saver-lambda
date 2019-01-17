@@ -9,7 +9,8 @@ require_relative 'lib/slack_channel_history'
 Dotenv.overload
 
 CHANNELS = [
-  'ethics'
+  'ethics',
+  'effective-altruism'
 ].freeze
 
 REPO_NAME = 'saved-links'.freeze
